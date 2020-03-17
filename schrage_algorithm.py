@@ -10,9 +10,9 @@ class RPQ:
 
     @staticmethod
     def sort_R(data):
-        order_by_access_time = data.copy()
-        order_by_access_time.sort(key=lambda x: x[0])
-        return order_by_access_time
+        posortowane = data.copy()
+        posortowane.sort(key=lambda x: x[0])
+        return posortowane
 
     @staticmethod
     def find_min(data):
@@ -49,12 +49,11 @@ class RPQ:
         N = data  # G - zbiór pusty, N - przypisanie wszystkich zadań
         minr, el = RPQ.find_min(N)  # pobieram najmniejszy czas r z tablicy N oraz element, który ten czas zawiera
         while len(N) != 0 or len(G) != 0:
-            while len(N) != 0  and sorted[0][0] <= time:
+            while len(N) != 0 and sorted[0][0] <= time:
                 G.append(el)  # dodaję element do G
                 N.remove(el)  # usuwam element z N
                 minr, el = RPQ.find_min(N)
             if len(G) != 0:
-
                 max_q, el_2, p = RPQ.find_maxq_and_p(G)  # wyszukuję największy czas q, element, który temu odpowiada oraz czas wykonania tego zadania
                 print(el_2)
                 G.remove(el_2)  # usuwam ten element z G
@@ -66,7 +65,7 @@ class RPQ:
         return pi
 
 
-print(RPQ.schrage('data500.txt'))
+print(RPQ.schrage('data10.txt'))
 
 # n, data = RPQ.readData('data10.txt')
 # M = []

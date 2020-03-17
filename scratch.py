@@ -45,12 +45,12 @@ class RPQ:
 
 
 
-data =RPQ.czytaj("data500.txt")
-#print(data)
+data =RPQ.czytaj("data10.txt")
+print(data)
 print(RPQ.liczC(data))
 print(RPQ.liczC(data).pop())
 posortowane=RPQ.sortuj(data)
-#print((posortowane))
+print((posortowane))
 print(RPQ.liczC(posortowane))
 print(RPQ.liczC(posortowane).pop())
 
