@@ -4,7 +4,6 @@ import numpy
 
 class RPQ:
 
-
     @staticmethod
     #czytamy z sciezki
     def czytaj(sciezka):
