@@ -47,22 +47,48 @@ class RPQ:
         k = 1
         G = []
         N = data  # G - zbiór pusty, N - przypisanie wszystkich zadań
-        minr, el = RPQ.find_min(N)  # pobieram najmniejszy czas r z tablicy N oraz element, który ten czas zawiera
-        while len(N) != 0 or len(G) != 0:
-            while len(N) != 0 and sorted[0][0] <= time:
-                G.append(el)  # dodaję element do G
-                N.remove(el)  # usuwam element z N
+
+        #Kuba Z
+        t=sorted[0][0]
+        k=0
+        Cmax=0
+        pii=[]
+
+        while len(G) != 0 or len(N) != 0:
+            while len(N) != 0 and time <= t:
                 minr, el = RPQ.find_min(N)
+                G.append(el)
+                N.remove(el)
             if len(G) != 0:
-                max_q, el_2, p = RPQ.find_maxq_and_p(G)  # wyszukuję największy czas q, element, który temu odpowiada oraz czas wykonania tego zadania
-                print(el_2)
-                G.remove(el_2)  # usuwam ten element z G
-                time += p  # do czasu rozpoczęcia dodaję czas wykonania
-                k += 1
-                pi += max_q
+                max_1, el, p = RPQ.find_maxq_and_p(G)
+                G.remove(el)
+                pii[k] = el
+                k = k + 1
+                t = t+el[k][1]
             else:
-                time = RPQ.find_min(N)
-        return pi
+                t = minr
+
+        print(pii)
+
+
+       # minr, el = RPQ.find_min(N)  # pobieram najmniejszy czas r z tablicy N oraz element, który ten czas zawiera
+        #while len(N) != 0 or len(G) != 0:
+         #   while len(N) != 0 and sorted[0][0] <= time:
+          #      G.append(el)  # dodaję element do G
+           #     N.remove(el)  # usuwam element z N
+            #    minr, el = RPQ.find_min(N)
+            #if len(G) != 0:
+             #   max_q, el_2, p = RPQ.find_maxq_and_p(G)  # wyszukuję największy czas q, element, który temu odpowiada oraz czas wykonania tego zadania
+              #  print(el_2)
+               # G.remove(el_2)  # usuwam ten element z G
+                #time += p  # do czasu rozpoczęcia dodaję czas wykonania
+                #k += 1
+                #pi += max_q
+            #else:
+             #   time = RPQ.find_min(N)
+        #return pi
+
+
 
 
 print(RPQ.schrage('data10.txt'))
