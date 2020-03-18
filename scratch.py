@@ -16,7 +16,7 @@ class RPQ:
 #print(RPQ.czytaj("data10.txt"))
 
     @staticmethod
-    def sortuj(data):  # proste sortowanie po r
+    def sortujR(data):  # proste sortowanie po r
         posortowane = data.copy()
         posortowane.sort(key=lambda x: x[0])
         return posortowane
@@ -49,7 +49,7 @@ data =RPQ.czytaj("data10.txt")
 print(data)
 print(RPQ.liczC(data))
 print(RPQ.liczC(data).pop())
-posortowane=RPQ.sortuj(data)
+posortowane=RPQ.sortujR(data)
 print((posortowane))
 print(RPQ.liczC(posortowane))
 print(RPQ.liczC(posortowane).pop())

@@ -1,7 +1,7 @@
 class RPQ:
 
     @staticmethod
-    def readData(filepath):
+    def czytaj(filepath):
         data = []
         with open(filepath) as f:
             n, kolumny = [int(x) for x in next(f).split()]
@@ -9,14 +9,14 @@ class RPQ:
         return n, data
 
     @staticmethod
-    def sort_R(data):
+    def sortujR(data):
         posortowane = data.copy()
         posortowane.sort(key=lambda x: x[0])
         return posortowane
 
     @staticmethod
     def find_min(data):
-        min = 1000
+        min = 1000000
         el = []
         for i in range(0, len(data)):
             if data[i][0] < min:
@@ -40,8 +40,8 @@ class RPQ:
     @staticmethod
     def schrage(data):
         pi = 0
-        n, data = RPQ.readData(data)  # wczytuje dane z pliku
-        sorted = RPQ.sort_R(data)
+        n, data = RPQ.czytaj(data)  # wczytuje dane z pliku
+        sorted = RPQ.sortujR(data)
         time = sorted[0][0]  # pobieram najmniejszy czas r (korzystam z sortowania po R)
 
         k = 1
@@ -91,7 +91,7 @@ class RPQ:
 
 
 
-print(RPQ.schrage('data50.txt'))
+print(RPQ.schrage('data500.txt'))
 
 # n, data = RPQ.readData('data10.txt')
 # M = []
