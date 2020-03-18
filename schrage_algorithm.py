@@ -62,12 +62,12 @@ class RPQ:
             if len(G) != 0:
                 max_1, el, p = RPQ.find_maxq_and_p(G)
                 G.remove(el)
-                pii[k] = el
+                pii.append(el)
+                t = t+p
                 k = k + 1
-                t = t+el[k][1]
+
             else:
                 t = minr
-
         print(pii)
 
 
@@ -91,7 +91,7 @@ class RPQ:
 
 
 
-print(RPQ.schrage('data10.txt'))
+print(RPQ.schrage('data50.txt'))
 
 # n, data = RPQ.readData('data10.txt')
 # M = []
