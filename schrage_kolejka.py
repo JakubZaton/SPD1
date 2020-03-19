@@ -74,8 +74,10 @@ class RPQ:
         while len(N) != 0 or len(G) != 0:
             while len(N) != 0 and (min_r <= time):
                 el = sorted[0]
-                #G.append(el)  # dodaję element do G
-                heapq.heappush(G, el)
+                for z in range(len(G)):
+                    if G[z][2] < el[2]:
+                        G.insert(z, el)  # dodaję element do G
+               # heapq.heappush(G, el)
                 #print(G)
 
                 N.remove(el)  # usuwam element z N
@@ -85,13 +87,16 @@ class RPQ:
                     min_r = sorted[0][0]
 
             if len(G) != 0:
-               # G2 = pd.DataFrame(G)
+              #  G2 = pd.DataFrame(G)
               #  print(G2)
-              #  Maxq = G2.nlargest(1, 2)
+               # Maxq = G2.nlargest(1, 2)
               #  max_q = Maxq[2]
                # el_2 = Maxq
                # p = Maxq[1]
-                max_q, el_2, p = RPQ.find_maxq_and_p(G)  # wyszukuję największy czas q
+                #max_q, el_2, p = RPQ.find_maxq_and_p(G)  # wyszukuję największy czas q
+                el_2 = G.pop(-1)
+                max_q = el_2[2]
+                p = el_2[0]
                 #el_2 = heapq.nlargest(1, G, key=G[0][2])
                 #print(el_2)
                 G.remove(el_2)  # usuwam ten element z G
@@ -108,4 +113,4 @@ class RPQ:
 
 #print(RPQ.czytaj2('data10.txt'))
 
-print(RPQ.loss_function(RPQ.schrage('data500.txt')).pop())
+print(RPQ.loss_function(RPQ.schrage('data10.txt')).pop())
