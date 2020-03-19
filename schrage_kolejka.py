@@ -58,16 +58,16 @@ class RPQ:
         sorted = RPQ.sortujR(N)
         min_r = sorted[0][0]
         time = sorted[0][0]  # pobieram najmniejszy czas r (korzystam z sortowania po R)
-       # del sorted[0]
+        #del sorted[0]
         while len(N) != 0 or len(G) != 0:
             while len(N) != 0 and (min_r <= time):
                 el = sorted[0]
                 G.append(el)  # dodaję element do G
                 N.remove(el)  # usuwam element z N
                 if len(N) != 0:
-                    #sorted = RPQ.sortujR(N)
+                    sorted = RPQ.sortujR(N)
                     min_r = sorted[0][0]
-                    del sorted[0]
+                    #del sorted[0]
             if len(G) != 0:
                 max_q, el_2, p = RPQ.find_maxq_and_p(G)  # wyszukuję największy czas q
                 #print(el_2)
@@ -76,10 +76,10 @@ class RPQ:
                 k += 1
                 pi.append(el_2)
             else:
-                #RPQ.sortujR(N)
+                RPQ.sortujR(N)
                 time = sorted[0][0]
-                del sorted[0]
+               # del sorted[0]
         return pi
 
 
-print(RPQ.loss_function(RPQ.schrage('data10.txt')).pop())
+print(RPQ.loss_function(RPQ.schrage('data500.txt')).pop())

@@ -81,7 +81,7 @@ class RPQ:
         return pi
 
 
-print(RPQ.loss_function(RPQ.schrage('data10.txt')).pop())
+print(RPQ.loss_function(RPQ.schrage('data500.txt')).pop())
 
 
 
