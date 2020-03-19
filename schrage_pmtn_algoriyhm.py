@@ -28,42 +28,39 @@ class RPQ:
 
     @staticmethod
     def schrage_pmtn(data):
-        pi = []
-        N = []
         n, N = RPQ.readData(data)  # wczytuje dane z pliku
-        #k = 1
+        # k = 1
         G = []
         sorted = RPQ.sort_R(N)
         min_r = sorted[0][0]
-        time = 0 # pobieram najmniejszy czas r (korzystam z sortowania po R)
+        time = 0  # pobieram najmniejszy czas r (korzystam z sortowania po R)
         C_max = 0
         el_l = [0, 0, 1000000]
         while len(N) != 0 or len(G) != 0:
-            while len(N) != 0 and (min_r <= time):
+            while len(N) != 0 and min_r <= time:
                 el = sorted[0]
                 G.append(el)  # dodaję element do G
                 N.remove(el)  # usuwam element z N
                 if (len(N) != 0):
                     sorted = RPQ.sort_R(N)
                     min_r = sorted[0][0]
-                if sorted[0][2] >= el_l[2]:
-                    el_l[1] = time - sorted[0][0]
-                    time = sorted[0][0]
+                if el[2] > el_l[2]:
+                    el_l[1] = time - el[0]
+                    time = el[0]
                     if el_l[1] > 0:
                         G.append(el_l)
             if len(G) == 0:
-                RPQ.sort_R(N)
+                # sorted = RPQ.sort_R(N)
                 time = sorted[0][0]
             else:
                 max_q, el_2, p = RPQ.find_maxq_and_p(G)  # wyszukuję największy czas q
-                # print(el_2)
-
                 G.remove(el_2)  # usuwam ten element z G
                 el_l = el_2
                 time += p  # do czasu rozpoczęcia dodaję czas wykonania
+                # print(time + max_q)
                 C_max = max(C_max, time + max_q)
                 # print(C_max)
-                #pi.append(el_l)
+                # pi.append(el_l)
         return C_max
 
 #print(RPQ.loss_function(RPQ.schrage('in50.txt')).pop())
