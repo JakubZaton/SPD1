@@ -65,5 +65,5 @@ class RPQ:
 
 #print(RPQ.loss_function(RPQ.schrage('in50.txt')).pop())
 #print(RPQ.loss_function(RPQ.schrage_pmtn('in50.txt')).pop())
-print(RPQ.schrage_pmtn('data10.txt'))
+print(RPQ.schrage_pmtn('data50.txt'))
 

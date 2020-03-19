@@ -2,6 +2,7 @@
 import heapq
 import numpy
 import pandas
+import pandas as pd
 
 class RPQ:
 
@@ -12,6 +13,15 @@ class RPQ:
             n, kolumny = [int(x) for x in next(f).split()]
             data = [[int(x) for x in line.split()] for line in f]
         return n, data
+   # @staticmethod
+   # def czytaj2(filepath):
+   #     data2=[]
+   #     with open(filepath) as f:
+   #         n, kolumny = [int(x) for x in next(f).split()]
+   #         data = [[int(x) for x in line.split()] for line in f]
+    #    data2 = pd.DataFrame(data)
+   #     return data2
+
 
     @staticmethod
     def sortujR(data):
@@ -53,33 +63,49 @@ class RPQ:
         pi = []
         N = []
         n, N = RPQ.czytaj(data)  # wczytuje dane z pliku
-        k = 1
+        #N2 = RPQ.czytaj2(data)
+        k = 0
+        i = -1
         G = []
         sorted = RPQ.sortujR(N)
         min_r = sorted[0][0]
         time = sorted[0][0]  # pobieram najmniejszy czas r (korzystam z sortowania po R)
-        #del sorted[0]
+
         while len(N) != 0 or len(G) != 0:
             while len(N) != 0 and (min_r <= time):
                 el = sorted[0]
-                G.append(el)  # dodaję element do G
+                #G.append(el)  # dodaję element do G
+                heapq.heappush(G, el)
+                #print(G)
+
                 N.remove(el)  # usuwam element z N
+                sorted.remove(el)
                 if len(N) != 0:
-                    sorted = RPQ.sortujR(N)
+                   # sorted = RPQ.sortujR(N)
                     min_r = sorted[0][0]
-                    #del sorted[0]
+
             if len(G) != 0:
+               # G2 = pd.DataFrame(G)
+              #  print(G2)
+              #  Maxq = G2.nlargest(1, 2)
+              #  max_q = Maxq[2]
+               # el_2 = Maxq
+               # p = Maxq[1]
                 max_q, el_2, p = RPQ.find_maxq_and_p(G)  # wyszukuję największy czas q
+                #el_2 = heapq.nlargest(1, G, key=G[0][2])
                 #print(el_2)
                 G.remove(el_2)  # usuwam ten element z G
+                #heapq._heappop_max(G)
                 time += p  # do czasu rozpoczęcia dodaję czas wykonania
                 k += 1
                 pi.append(el_2)
             else:
-                RPQ.sortujR(N)
+                #RPQ.sortujR(N) #nie potrzebne
                 time = sorted[0][0]
-               # del sorted[0]
+
         return pi
 
+
+#print(RPQ.czytaj2('data10.txt'))
 
 print(RPQ.loss_function(RPQ.schrage('data500.txt')).pop())
