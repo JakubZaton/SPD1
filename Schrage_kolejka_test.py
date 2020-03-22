@@ -102,7 +102,7 @@ class RPQ:
                 if G != [[0, 0, 0]]:
                     el_2 = G.pop(-1)
                 max_q = el_2[2]
-                p = el_2[0]
+                p = el_2[1]
                 #el_2 = heapq.nlargest(1, G, key=G[0][2])
                 #print(el_2)
                # G.remove(el_2)  # usuwam ten element z G
@@ -119,4 +119,4 @@ class RPQ:
 
 #print(RPQ.czytaj2('data10.txt'))
 
-print(RPQ.loss_function(RPQ.schrage('data10.txt')).pop())
+print(RPQ.loss_function(RPQ.schrage('data500.txt')).pop())
