@@ -17,6 +17,18 @@ class RPQ:
         return order_by_access_time
 
     @staticmethod
+    def find_maxq_and_p(data):
+        max = 0
+        el = []
+        p = 0
+        for i in range(0, len(data)):
+            if data[i][2] > max:
+                max = data[i][2]
+                el = data[i]
+                p = data[i][1]
+        return max, el, p
+
+    @staticmethod
     def loss_function(data):
         max_time_q = sum(data[0])  # bieżący czas dostarczenia zadania
         time = data[0][0] + data[0][1]
@@ -34,19 +46,9 @@ class RPQ:
         return C
 
     @staticmethod
-    def heap(data):
-        q = [(x[2], x) for x in data]
-        heapify(q)
-        # print(q)
-        max = nlargest(1, q)
-        max_q = max[0][0]
-        max_el = max[0][1]
-        p = max[0][1][1]
-        return max_q, max_el, p
-
-    @staticmethod
     def schrage(data):
         pi = []
+        N = []
         n, N = RPQ.readData(data)  # wczytuje dane z pliku
         k = 1
         G = []
@@ -56,14 +58,13 @@ class RPQ:
         while len(N) != 0 or len(G) != 0:
             while len(N) != 0 and (min_r <= time):
                 el = sorted[0]
-                heappush(G, el)  # dodaję element do G
-                print(G)
+                G.append(el)  # dodaję element do G
                 N.remove(el)  # usuwam element z N
                 sorted.remove(el)
                 if(len(sorted) != 0):
                     min_r = sorted[0][0]
             if len(G) != 0:
-                max_q, el_2, p = RPQ.heap(G)
+                max_q, el_2, p = RPQ.find_maxq_and_p(G)  # wyszukuję największy czas q
                 G.remove(el_2)  # usuwam ten element z G
                 time += p  # do czasu rozpoczęcia dodaję czas wykonania
                 k += 1
@@ -75,6 +76,7 @@ class RPQ:
     @staticmethod
     def schrage_pmtn(data):
         n, N = RPQ.readData(data)  # wczytuje dane z pliku
+        #k = 1
         G = []
         sorted = RPQ.sort_R(N)
         min_r = sorted[0][0]
@@ -93,11 +95,11 @@ class RPQ:
                     el_l[1] = time - el[0]
                     time = el[0]
                     if el_l[1] > 0:
-                        heappush(G, el_l)
+                        G.append(el_l)
             if len(G) == 0:
                 time = sorted[0][0]
             else:
-                max_q, el_2, p = RPQ.heap(G)  # wyszukuję największy czas q
+                max_q, el_2, p = RPQ.find_maxq_and_p(G)  # wyszukuję największy czas q
                 G.remove(el_2)  # usuwam ten element z G
                 el_l = el_2
                 time += p  # do czasu rozpoczęcia dodaję czas wykonania
@@ -119,4 +121,3 @@ wyniki_schrage_pmtn.append(RPQ.schrage_pmtn('data50.txt'))
 wyniki_schrage_pmtn.append(RPQ.schrage_pmtn('data100.txt'))
 wyniki_schrage_pmtn.append(RPQ.schrage_pmtn('data500.txt'))
 print(wyniki_schrage_pmtn)
-
