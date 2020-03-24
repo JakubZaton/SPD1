@@ -99,8 +99,8 @@ class RPQ:
                # el_2 = Maxq
                # p = Maxq[1]
                # max_q, el_2, p = RPQ.find_maxq_and_p(G)  # wyszukuję największy czas q
-                if G != [[0, 0, 0]]:
-                    el_2 = G.pop(-1)
+
+                el_2 = G.pop(-1)
                 max_q = el_2[2]
                 p = el_2[1]
                 #el_2 = heapq.nlargest(1, G, key=G[0][2])
@@ -119,4 +119,4 @@ class RPQ:
 
 #print(RPQ.czytaj2('data10.txt'))
 
-print(RPQ.loss_function(RPQ.schrage('data500.txt')).pop())
+print(RPQ.loss_function(RPQ.schrage('data10.txt')).pop())

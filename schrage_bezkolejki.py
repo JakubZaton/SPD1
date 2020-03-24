@@ -1,4 +1,5 @@
 from heapq import heappush, heapify, nlargest
+from timeit import default_timer as timer
 
 class RPQ:
 
@@ -47,6 +48,7 @@ class RPQ:
 
     @staticmethod
     def schrage(data):
+        start = timer()
         pi = []
         N = []
         n, N = RPQ.readData(data)  # wczytuje dane z pliku
@@ -71,10 +73,12 @@ class RPQ:
                 pi.append(el_2)
             else:
                 time = sorted[0][0]
-        return pi
+        end = timer()
+        return end - start # pi - dla liczenia pi
 
     @staticmethod
     def schrage_pmtn(data):
+        start = timer()
         n, N = RPQ.readData(data)  # wczytuje dane z pliku
         #k = 1
         G = []
@@ -104,8 +108,10 @@ class RPQ:
                 el_l = el_2
                 time += p  # do czasu rozpoczęcia dodaję czas wykonania
                 C_max = max(C_max, time + max_q)
-        return C_max
-
+        end = timer()
+        return end - start  # C_max dla liczenia C_max
+'''
+# Wyniki dzialan algorytmow
 wyniki_schrage = []
 wyniki_schrage_pmtn = []
 
@@ -113,11 +119,78 @@ wyniki_schrage.append(RPQ.loss_function(RPQ.schrage('data10.txt')).pop())
 wyniki_schrage.append(RPQ.loss_function(RPQ.schrage('data20.txt')).pop())
 wyniki_schrage.append(RPQ.loss_function(RPQ.schrage('data50.txt')).pop())
 wyniki_schrage.append(RPQ.loss_function(RPQ.schrage('data100.txt')).pop())
+wyniki_schrage.append(RPQ.loss_function(RPQ.schrage('data200.txt')).pop())
 wyniki_schrage.append(RPQ.loss_function(RPQ.schrage('data500.txt')).pop())
 print(wyniki_schrage)
 wyniki_schrage_pmtn.append(RPQ.schrage_pmtn('data10.txt'))
 wyniki_schrage_pmtn.append(RPQ.schrage_pmtn('data20.txt'))
 wyniki_schrage_pmtn.append(RPQ.schrage_pmtn('data50.txt'))
 wyniki_schrage_pmtn.append(RPQ.schrage_pmtn('data100.txt'))
+wyniki_schrage_pmtn.append(RPQ.schrage_pmtn('data200.txt'))
 wyniki_schrage_pmtn.append(RPQ.schrage_pmtn('data500.txt'))
 print(wyniki_schrage_pmtn)
+
+'''
+'''
+wyniki czasu dzialania
+wynikschrange10 =0;
+for i in range(100):
+    wynikschrange10 = wynikschrange10 + RPQ.schrage('data10.txt')
+print(wynikschrange10/100)
+
+wynikschrange20 =0;
+for i in range(100):
+    wynikschrange20 = wynikschrange20 + RPQ.schrage('data20.txt')
+print(wynikschrange20/100)
+
+wynikschrange50 =0;
+for i in range(100):
+    wynikschrange50 = wynikschrange50 + RPQ.schrage('data50.txt')
+print(wynikschrange50/100)
+
+wynikschrange100 =0;
+for i in range(100):
+    wynikschrange100 = wynikschrange100 + RPQ.schrage('data100.txt')
+print(wynikschrange100/100)
+
+wynikschrange200 =0;
+for i in range(100):
+    wynikschrange200 = wynikschrange200 + RPQ.schrage('data200.txt')
+print(wynikschrange200/100)
+
+wynikschrange500 =0;
+for i in range(100):
+    wynikschrange500 = wynikschrange500 + RPQ.schrage('data500.txt')
+print(wynikschrange500/100)
+'''
+
+wynikschrange10 =0;
+for i in range(100):
+    wynikschrange10 = wynikschrange10 + RPQ.schrage_pmtn('data10.txt')
+print(wynikschrange10/100)
+
+wynikschrange20 =0;
+for i in range(100):
+    wynikschrange20 = wynikschrange20 + RPQ.schrage_pmtn('data20.txt')
+print(wynikschrange20/100)
+
+wynikschrange50 =0;
+for i in range(100):
+    wynikschrange50 = wynikschrange50 + RPQ.schrage_pmtn('data50.txt')
+print(wynikschrange50/100)
+
+wynikschrange100 =0;
+for i in range(100):
+    wynikschrange100 = wynikschrange100 + RPQ.schrage_pmtn('data100.txt')
+print(wynikschrange100/100)
+
+wynikschrange200 =0;
+for i in range(100):
+    wynikschrange200 = wynikschrange200 + RPQ.schrage_pmtn('data200.txt')
+print(wynikschrange200/100)
+
+wynikschrange500 =0;
+for i in range(100):
+    wynikschrange500 = wynikschrange500 + RPQ.schrage_pmtn('data500.txt')
+print(wynikschrange500/100)
+
