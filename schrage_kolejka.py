@@ -1,4 +1,4 @@
-from heapq import heappush, heapify, nlargest
+from heapq import heappush, heapify, nlargest, heappop
 
 class RPQ:
 
@@ -57,7 +57,6 @@ class RPQ:
             while len(N) != 0 and (min_r <= time):
                 el = sorted[0]
                 heappush(G, el)  # dodaję element do G
-                print(G)
                 N.remove(el)  # usuwam element z N
                 sorted.remove(el)
                 if(len(sorted) != 0):
@@ -84,7 +83,7 @@ class RPQ:
         while len(N) != 0 or len(G) != 0:
             while len(N) != 0 and min_r <= time:
                 el = sorted[0]
-                G.append(el)  #dodaję element do G
+                heappush(G, el)  #dodaję element do G
                 N.remove(el)  #usuwam element z N
                 sorted.remove(el)
                 if (len(sorted) != 0):
@@ -119,4 +118,14 @@ wyniki_schrage_pmtn.append(RPQ.schrage_pmtn('data50.txt'))
 wyniki_schrage_pmtn.append(RPQ.schrage_pmtn('data100.txt'))
 wyniki_schrage_pmtn.append(RPQ.schrage_pmtn('data500.txt'))
 print(wyniki_schrage_pmtn)
+
+J = [[1,4,4],[2,3,3],[3,10,7]]
+my_queue = []
+for item in range(0,len(J)):
+  heappush(my_queue,(J[item][2],J[item]))
+my_queue.reverse()
+print(my_queue)
+while my_queue:
+    x = heappop(my_queue)
+    print(x)
 
