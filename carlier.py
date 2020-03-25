@@ -1,3 +1,6 @@
+
+import math
+
 class RPQ:
 
     @staticmethod #wczytywanie z pliku
@@ -71,12 +74,32 @@ class RPQ:
                 time = sorted[0][0]
         return pi
 
-   # @staticmethod
-   # def carlier(self, data):
-      #  U = self.shrage(data)
-       # if U < UB:
-           # UB = U
-            #pii=
+    @staticmethod
+    def carlier(data):
+        UB = math.inf;
+        U = RPQ.loss_function(RPQ.schrage(data)).pop()
+        if U < UB:
+            UB = U
+            pii= RPQ.schrage(data)
+        b=max()
+        a=min()
+        c=max()
+
+        if c = 0:
+            return pii
+        K =
+        r=min()
+        q=min()
+        p=min()
+        rpi = max(rpi,r+p)
+        LB = RPQ.schrage_pmtn(data)
+        if LB < UB:
+            RPQ.carlier(data)
+        # restore rpi(c)
+        qpi = max(qpi,q+p)
+        LB = RPQ.schrage_pmtn(data)
+        if LB < UB:
+        #restore qpi(c)
 
 
     @staticmethod

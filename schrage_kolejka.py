@@ -47,7 +47,7 @@ class RPQ:
 
     @staticmethod
     def schrage(data):
-        start = timer()
+
         pi = []
         n, N = RPQ.readData(data)  # wczytuje dane z pliku
         k = 1
@@ -55,6 +55,7 @@ class RPQ:
         sorted = RPQ.sort_R(N)
         min_r = sorted[0][0]
         time = sorted[0][0]  # pobieram najmniejszy czas r (korzystam z sortowania po R)
+        start = timer()
         while len(N) != 0 or len(G) != 0:
             while len(N) != 0 and (min_r <= time):
                 el = sorted[0]
@@ -76,7 +77,7 @@ class RPQ:
 
     @staticmethod
     def schrage_pmtn(data):
-        start = timer()
+
         n, N = RPQ.readData(data)  # wczytuje dane z pliku
         G = []
         sorted = RPQ.sort_R(N)
@@ -84,6 +85,7 @@ class RPQ:
         time = 0 # pobieram najmniejszy czas r (korzystam z sortowania po R)
         C_max = 0
         el_l = [0, 0, 1000000]
+        start = timer()
         while len(N) != 0 or len(G) != 0:
             while len(N) != 0 and min_r <= time:
                 el = sorted[0]
