@@ -132,7 +132,7 @@ class RPQ:
 
     @staticmethod
     def find_max_c(data, a, b):
-        for i in range(b, a, -1):
+        for i in range(a, b): # bylo tutaj range(b, a, -1)
             if data[i][2] < data[b][2]:
                 return i
 
@@ -165,7 +165,7 @@ class RPQ:
         b = RPQ.find_max_b(loss_f, C_max)
         a = RPQ.find_min_a(tab, C_max, b)
         c = RPQ.find_max_c(tab, a, b)
-        if c == 0:
+        if c == 0 or c is None:
             return new_pi
         new_r, new_p, new_q = RPQ.find_new_rpq(c, b, tab)
         r_c = tab[b][0]
@@ -194,7 +194,7 @@ wyniki_schrage = []
 wyniki_schrage_pmtn = []
 
 data10 = readData('data10.txt')
-print(RPQ.carlier(data10))
+print(RPQ.loss_function(RPQ.carlier(data10)))
 wyniki_schrage.append(RPQ.find_max_C(RPQ.loss_function(RPQ.schrage(data10))))
 wyniki_schrage_pmtn.append(RPQ.schrage_pmtn(data10))
 
