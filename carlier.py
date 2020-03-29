@@ -1,5 +1,10 @@
 import sys
 from heapq import heappush, heapify, nlargest, heappop
+from copy import copy, deepcopy
+
+new_pi = 0
+LB = 0
+UB = sys.maxsize
 
 class RPQ:
 
@@ -81,7 +86,8 @@ class RPQ:
     @staticmethod
     def schrage_pmtn(tab):
         #n, N = RPQ.readData(data)  # wczytuje dane z pliku
-        N = tab.copy()
+
+        N = deepcopy(tab)
         G = []
         sorted = RPQ.sort_R(N)
         min_r = sorted[0][0]
@@ -112,6 +118,40 @@ class RPQ:
         return C_max
 
     @staticmethod
+    def schrage_pmtn_deepcopy(tab):
+        # n, N = RPQ.readData(data)  # wczytuje dane z pliku
+
+        N = deepcopy(tab)
+        G = []
+        sorted = RPQ.sort_R(N)
+        min_r = sorted[0][0]
+        time = 0  # pobieram najmniejszy czas r (korzystam z sortowania po R)
+        C_max = 0
+        el_l = [0, 0, 1000000]
+        while len(N) != 0 or len(G) != 0:
+            while len(N) != 0 and min_r <= time:
+                el = sorted[0]
+                heappush(G, el)  # dodaję element do G
+                N.remove(el)  # usuwam element z N
+                sorted.remove(el)
+                if (len(sorted) != 0):
+                    min_r = sorted[0][0]
+                if el[2] > el_l[2]:
+                    el_l[1] = time - el[0]
+                    time = el[0]
+                    if el_l[1] > 0:
+                        heappush(G, el_l)
+            if len(G) == 0:
+                time = sorted[0][0]
+            else:
+                max_q, el_2, p = RPQ.heap(G)  # wyszukuję największy czas q
+                G.remove(el_2)  # usuwam ten element z G
+                el_l = el_2
+                time += p  # do czasu rozpoczęcia dodaję czas wykonania
+                C_max = max(C_max, time + max_q)
+        return C_max, tab
+
+    @staticmethod
     def find_max_b(data_b, C_max):
         for i in range(len(data_b)-1, 0, -1):
             if data_b[i] == C_max:
@@ -132,7 +172,7 @@ class RPQ:
 
     @staticmethod
     def find_max_c(data, a, b):
-        for i in range(a, b): # bylo tutaj range(b, a, -1)
+        for i in range(b, a-1, -1):
             if data[i][2] < data[b][2]:
                 return i
 
@@ -140,47 +180,51 @@ class RPQ:
     def find_new_rpq(c, b, data):
         new_p = 0
         new_r = sys.maxsize
-        min_q = sys.maxsize
-        new_q = 0
-        for i in range(c, b+1):
+        #min_q = sys.maxsize
+        new_q = sys.maxsize
+        for i in range(c+1, b+1):
             if data[i][0] < new_r:
                 new_r = data[i][0]
-            if data[i][1] < min_q:
-                min_q = data[i][1]
+            if data[i][2] < new_q:
+                new_q = data[i][2]
             new_p += data[i][1]
         return new_r, new_p, new_q
 
-
     @staticmethod
-    def carlier(J):
-        tab = RPQ.schrage(J)
-        old_pi = RPQ.schrage(J)
-        U = RPQ.find_max_C(RPQ.loss_function(tab))
-        UB = sys.maxsize
+    def carlier_test(tablica):
+        tablica_kopia = tablica.copy()
+        tablica_schrage = RPQ.schrage(tablica_kopia)
+        tablica_strat = RPQ.loss_function(tablica_schrage)
+        U = RPQ.find_max_C(tablica_strat)
+        old_pi = RPQ.find_max_C(tablica_strat)
+        C_max = RPQ.find_max_C(tablica_strat)
+        #UB = sys.maxsize
+        global UB
+        global new_pi
         if U < UB:
             UB = U
             new_pi = old_pi
-        loss_f = RPQ.loss_function(RPQ.schrage(tab))
-        C_max = RPQ.find_max_C(RPQ.loss_function(RPQ.schrage(tab)))
-        b = RPQ.find_max_b(loss_f, C_max)
-        a = RPQ.find_min_a(tab, C_max, b)
-        c = RPQ.find_max_c(tab, a, b)
-        if c == 0 or c is None:
+        b = RPQ.find_max_b(tablica_strat, C_max)
+        a = RPQ.find_min_a(tablica_schrage, C_max, b)
+        c = RPQ.find_max_c(tablica_schrage, a, b)
+        if c is None:
             return new_pi
-        new_r, new_p, new_q = RPQ.find_new_rpq(c, b, tab)
-        r_c = tab[b][0]
-        tab[b][0] = max(tab[b][0], new_r + new_p)
-        LB = RPQ.schrage_pmtn(tab)
+        new_r, new_p, new_q = RPQ.find_new_rpq(c, b, tablica_schrage)
+        r_c = tablica_schrage[c][0]
+        tablica_schrage[c][0] = max(tablica_schrage[c][0], new_r + new_p)
+        #t = tablica_schrage.copy()
+        global LB
+        LB, original_schrage = RPQ.schrage_pmtn_deepcopy(tablica_schrage)
         if LB < UB:
-            RPQ.carlier(tab)
-        tab[b][2] = r_c
-        q_c = tab[b][2]
-        tab[b][2] = max(tab[b][2], new_q + new_p)
-        LB = RPQ.schrage_pmtn(tab)
+            RPQ.carlier_test(original_schrage)
+        original_schrage[c][2] = r_c
+        q_c = original_schrage[c][2]
+        original_schrage[c][2] = max(original_schrage[c][2], new_q + new_p)
+        LB, more_original_schrage = RPQ.schrage_pmtn_deepcopy(original_schrage)
         if LB < UB:
-            RPQ.carlier(tab)
-        tab[b][2] = q_c
-
+            RPQ.carlier_test(more_original_schrage)
+        more_original_schrage[c][2] = q_c
+        return new_pi
 
 def readData(filepath):
     data = []
@@ -190,29 +234,29 @@ def readData(filepath):
     return data
 
 
-wyniki_schrage = []
-wyniki_schrage_pmtn = []
+print(RPQ.carlier_test(readData('data20.txt')))
 
-data10 = readData('data10.txt')
-print(RPQ.loss_function(RPQ.carlier(data10)))
-wyniki_schrage.append(RPQ.find_max_C(RPQ.loss_function(RPQ.schrage(data10))))
-wyniki_schrage_pmtn.append(RPQ.schrage_pmtn(data10))
 
-data20 = readData('data20.txt')
-wyniki_schrage.append(RPQ.find_max_C(RPQ.loss_function(RPQ.schrage(data20))))
-wyniki_schrage_pmtn.append(RPQ.schrage_pmtn(data20))
+#wyniki_carlier = []
+#data10 = readData('data10.txt')
 
-data50 = readData('data50.txt')
-wyniki_schrage.append(RPQ.find_max_C(RPQ.loss_function(RPQ.schrage(data50))))
-wyniki_schrage_pmtn.append(RPQ.schrage_pmtn(data50))
+#print(RPQ.carlier_test(readData('data10.txt')))
 
-data100 = readData('data100.txt')
-wyniki_schrage.append(RPQ.find_max_C(RPQ.loss_function(RPQ.schrage(data100))))
-wyniki_schrage_pmtn.append(RPQ.schrage_pmtn(data100))
+#data20 = readData('data20.txt')
 
-data500 = readData('data500.txt')
-wyniki_schrage.append(RPQ.find_max_C(RPQ.loss_function(RPQ.schrage(data500))))
-wyniki_schrage_pmtn.append(RPQ.schrage_pmtn(data500))
+#print(RPQ.carlier_test(readData('data20.txt')))
 
-print(wyniki_schrage)
-print(wyniki_schrage_pmtn)
+#data50 = readData('data50.txt')
+
+#print(RPQ.carlier_test(readData(data50)))
+
+
+#data100 = readData('data100.txt')
+
+#print(RPQ.carlier_test(readData(data100)))
+
+#data500 = readData('data500.txt')
+
+#print(RPQ.carlier_test(readData(data500)))
+
+

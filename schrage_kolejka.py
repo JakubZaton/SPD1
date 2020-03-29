@@ -73,7 +73,7 @@ class RPQ:
             else:
                 time = sorted[0][0]
         end = timer()
-        return end - start  # pi - zeby liczyl pi
+        return pi  # pi - zeby liczyl pi
 
     @staticmethod
     def schrage_pmtn(data):
@@ -108,10 +108,10 @@ class RPQ:
                 time += p  # do czasu rozpoczęcia dodaję czas wykonania
                 C_max = max(C_max, time + max_q)
         end = timer()
-        return end - start  # C_max bylo
-'''
+        return C_max  # C_max bylo
 
-Wyniki samych algorytmow
+
+#Wyniki samych algorytmow
 
 wyniki_schrage = []
 wyniki_schrage_pmtn = []
@@ -139,7 +139,7 @@ while my_queue:
     x = heappop(my_queue)
     print(x)
 
-'''
+
 
 #czas algorytmow
 '''
@@ -173,6 +173,7 @@ for i in range(100):
     wynikschrange500 = wynikschrange500 + RPQ.schrage('data500.txt')
 print(wynikschrange500/100)
 '''
+'''
 wynikschrange10 =0;
 for i in range(100):
     wynikschrange10 = wynikschrange10 + RPQ.schrage_pmtn('data10.txt')
@@ -202,3 +203,4 @@ wynikschrange500 =0;
 for i in range(100):
     wynikschrange500 = wynikschrange500 + RPQ.schrage_pmtn('data500.txt')
 print(wynikschrange500/100)
+'''

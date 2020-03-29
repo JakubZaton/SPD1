@@ -22,10 +22,11 @@ class RPQ:
 
     @staticmethod
     def liczC(filepath):
-        start = timer()
-        data2 = RPQ.czytaj(filepath) #dla posortowanych
+
+        data = RPQ.czytaj(filepath) #dla posortowanych
         C=[]
-        data = RPQ.sortujR(data2)
+        start = timer()
+        #data = RPQ.sortujR(data2)
         maksymalny = data[0][0]+data[0][1]+data[0][2] #wczytujemy wartosci z pierwszego zadania
         #print(maksymalny)
         czas = data[0][0]+data[0][1] #sprawdzamy czas przygotowania i wykonywania pierwszego zadania
