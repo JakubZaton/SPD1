@@ -10,14 +10,14 @@ UB = sys.maxsize
 class RPQ:
 
     @staticmethod
-    def sort_R(tab):
+    def sortujR(tab):
         data = tab.copy()
         order_by_access_time = data.copy()
         order_by_access_time.sort(key=lambda x: x[0])
         return order_by_access_time
 
     @staticmethod
-    def loss_function(tab):
+    def funkcjaStrat(tab):
         dane = tab.copy()
         max_time_q = dane[0][0] + dane[0][1] + dane[0][2]  # bieżący czas dostarczenia zadania
         time = dane[0][0] + dane[0][1]
@@ -60,10 +60,10 @@ class RPQ:
     def schrage(tab):
         N = tab.copy()
         pi = []
-        #n, N = RPQ.readData(data)  # wczytuje dane z pliku
+        #n, N = RPQ.czytaj(data)  # wczytuje dane z pliku
         k = 1
         G = []
-        sorted = RPQ.sort_R(N)
+        sorted = RPQ.sortujR(N)
         min_r = sorted[0][0]
         time = sorted[0][0]  # pobieram najmniejszy czas r (korzystam z sortowania po R)
         while len(N) != 0 or len(G) != 0:
@@ -86,11 +86,11 @@ class RPQ:
 
     @staticmethod
     def schrage_pmtn(tab):
-        #n, N = RPQ.readData(data)  # wczytuje dane z pliku
+        #n, N = RPQ.czytaj(data)  # wczytuje dane z pliku
 
         N = deepcopy(tab)
         G = []
-        sorted = RPQ.sort_R(N)
+        sorted = RPQ.sortujR(N)
         min_r = sorted[0][0]
         time = 0 # pobieram najmniejszy czas r (korzystam z sortowania po R)
         C_max = 0
@@ -120,11 +120,11 @@ class RPQ:
 
     @staticmethod
     def schrage_pmtn_deepcopy(tab):
-        # n, N = RPQ.readData(data)  # wczytuje dane z pliku
+        # n, N = RPQ.czytaj(data)  # wczytuje dane z pliku
 
         N = deepcopy(tab)
         G = []
-        sorted = RPQ.sort_R(N)
+        sorted = RPQ.sortujR(N)
         min_r = sorted[0][0]
         time = 0  # pobieram najmniejszy czas r (korzystam z sortowania po R)
         C_max = 0
@@ -195,7 +195,7 @@ class RPQ:
     def carlier_test(tablica):
         tablica_kopia = tablica.copy()
         tablica_schrage = RPQ.schrage(tablica_kopia)
-        tablica_strat = RPQ.loss_function(tablica_schrage)
+        tablica_strat = RPQ.funkcjaStrat(tablica_schrage)
         U = RPQ.find_max_C(tablica_strat)
         old_pi = RPQ.find_max_C(tablica_strat)
         C_max = RPQ.find_max_C(tablica_strat)
@@ -230,7 +230,7 @@ class RPQ:
         end = timer()
         return end - start
 
-def readData(filepath):
+def czytaj(filepath):
     data = []
     with open(filepath) as f:
         n, kolumny = [int(x) for x in next(f).split()]
@@ -238,39 +238,39 @@ def readData(filepath):
     return data
 
 
-#print(RPQ.carlier_test(readData('data500.txt')))
+#print(RPQ.carlier_test(czytaj('data500.txt')))
 
 wynikcarlier = 0
 for i in range(100):
-    wynikcarlier = wynikcarlier + RPQ.carlier_test(readData('data500.txt'))
+    wynikcarlier = wynikcarlier + RPQ.carlier_test(czytaj('data10.txt'))
 print(wynikcarlier/100)
 
 #wyniki_schrage = []
 #wyniki_schrage_pmtn = []
 #wyniki_carlier = []
-#data10 = readData('data10.txt')
-#wyniki_schrage.append(RPQ.find_max_C(RPQ.loss_function(RPQ.schrage(data10))))
+#data10 = czytaj('data10.txt')
+#wyniki_schrage.append(RPQ.find_max_C(RPQ.funkcjaStrat(RPQ.schrage(data10))))
 #wyniki_schrage_pmtn.append(RPQ.schrage_pmtn(data10))
 #wyniki_carlier.append((RPQ.carlier_test('data10.txt')))
 
-#data20 = readData('data20.txt')
-#wyniki_schrage.append(RPQ.find_max_C(RPQ.loss_function(RPQ.schrage(data20))))
+#data20 = czytaj('data20.txt')
+#wyniki_schrage.append(RPQ.find_max_C(RPQ.funkcjaStrat(RPQ.schrage(data20))))
 #wyniki_schrage_pmtn.append(RPQ.schrage_pmtn(data20))
 #wyniki_carlier.append((RPQ.carlier_test('data20.txt')))
 
-#data50 = readData('data50.txt')
-#wyniki_schrage.append(RPQ.find_max_C(RPQ.loss_function(RPQ.schrage(data50))))
+#data50 = czytaj('data50.txt')
+#wyniki_schrage.append(RPQ.find_max_C(RPQ.funkcjaStrat(RPQ.schrage(data50))))
 #wyniki_schrage_pmtn.append(RPQ.schrage_pmtn(data50))
 #wyniki_carlier.append((RPQ.carlier_test(data50)))
 
 
-#data100 = readData('data100.txt')
-#wyniki_schrage.append(RPQ.find_max_C(RPQ.loss_function(RPQ.schrage(data100))))
+#data100 = czytaj('data100.txt')
+#wyniki_schrage.append(RPQ.find_max_C(RPQ.funkcjaStrat(RPQ.schrage(data100))))
 #wyniki_schrage_pmtn.append(RPQ.schrage_pmtn(data100))
 #wyniki_carlier.append((RPQ.carlier_test(data100)))
 
-#data500 = readData('data500.txt')
-#wyniki_schrage.append(RPQ.find_max_C(RPQ.loss_function(RPQ.schrage(data500))))
+#data500 = czytaj('data500.txt')
+#wyniki_schrage.append(RPQ.find_max_C(RPQ.funkcjaStrat(RPQ.schrage(data500))))
 #wyniki_schrage_pmtn.append(RPQ.schrage_pmtn(data500))
 #wyniki_carlier.append((RPQ.carlier_test(data500)))
 

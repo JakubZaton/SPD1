@@ -4,7 +4,7 @@ from timeit import default_timer as timer
 class RPQ:
 
     @staticmethod #wczytywanie z pliku
-    def readData(filepath):
+    def czytaj(filepath):
         data = []
         with open(filepath) as f:
             n, kolumny = [int(x) for x in next(f).split()]
@@ -12,13 +12,13 @@ class RPQ:
         return n, data
 
     @staticmethod
-    def sort_R(data):
+    def sortujR(data):
         order_by_access_time = data.copy()
         order_by_access_time.sort(key=lambda x: x[0])
         return order_by_access_time
 
     @staticmethod
-    def loss_function(data):
+    def funkcjaStrat(data):
         max_time_q = sum(data[0])  # bieżący czas dostarczenia zadania
         time = data[0][0] + data[0][1]
         C = []
@@ -49,10 +49,10 @@ class RPQ:
     def schrage(data):
 
         pi = []
-        n, N = RPQ.readData(data)  # wczytuje dane z pliku
+        n, N = RPQ.czytaj(data)  # wczytuje dane z pliku
         k = 1
         G = []
-        sorted = RPQ.sort_R(N)
+        sorted = RPQ.sortujR(N)
         min_r = sorted[0][0]
         time = sorted[0][0]  # pobieram najmniejszy czas r (korzystam z sortowania po R)
         start = timer()
@@ -78,9 +78,9 @@ class RPQ:
     @staticmethod
     def schrage_pmtn(data):
 
-        n, N = RPQ.readData(data)  # wczytuje dane z pliku
+        n, N = RPQ.czytaj(data)  # wczytuje dane z pliku
         G = []
-        sorted = RPQ.sort_R(N)
+        sorted = RPQ.sortujR(N)
         min_r = sorted[0][0]
         time = 0 # pobieram najmniejszy czas r (korzystam z sortowania po R)
         C_max = 0
@@ -116,11 +116,11 @@ Wyniki samych algorytmow
 wyniki_schrage = []
 wyniki_schrage_pmtn = []
 
-wyniki_schrage.append(RPQ.loss_function(RPQ.schrage('data10.txt')).pop())
-wyniki_schrage.append(RPQ.loss_function(RPQ.schrage('data20.txt')).pop())
-wyniki_schrage.append(RPQ.loss_function(RPQ.schrage('data50.txt')).pop())
-wyniki_schrage.append(RPQ.loss_function(RPQ.schrage('data100.txt')).pop())
-wyniki_schrage.append(RPQ.loss_function(RPQ.schrage('data500.txt')).pop())
+wyniki_schrage.append(RPQ.funkcjaStrat(RPQ.schrage('data10.txt')).pop())
+wyniki_schrage.append(RPQ.funkcjaStrat(RPQ.schrage('data20.txt')).pop())
+wyniki_schrage.append(RPQ.funkcjaStrat(RPQ.schrage('data50.txt')).pop())
+wyniki_schrage.append(RPQ.funkcjaStrat(RPQ.schrage('data100.txt')).pop())
+wyniki_schrage.append(RPQ.funkcjaStrat(RPQ.schrage('data500.txt')).pop())
 print(wyniki_schrage)
 wyniki_schrage_pmtn.append(RPQ.schrage_pmtn('data10.txt'))
 wyniki_schrage_pmtn.append(RPQ.schrage_pmtn('data20.txt'))
