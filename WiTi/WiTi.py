@@ -51,7 +51,19 @@ class WiTi:
                 F_wynik = WiTi.funkcjeCelu(i)
         return F_wynik
 
+    @staticmethod
+    def licz_kombinacje_rekursywnie(data):
+        F_wynik = sys.maxsize
+        if len(pom) == len(data):
+            F_wynik2 = WiTi.funkcjeCelu(pom)
+            if F_wynik2 < F_wynik:
+                F_wynik = F_wynik2
+        for z in data:
+            temp = pom + z
+            WiTi.licz_kombinacje_rekursywnie(temp)
+        return F_wynik
 
-print(WiTi.funkcjeCelu(WiTi.sortujD(WiTi.czytaj('data10.txt'))))
-print(WiTi.licz_kombinacje(WiTi.czytaj('data10.txt')))
 
+#print(WiTi.funkcjeCelu(WiTi.sortujD(WiTi.czytaj('data11.txt'))))
+#print(WiTi.licz_kombinacje(WiTi.czytaj('data5.txt')))
+print(WiTi.licz_kombinacje_rekursywnie(WiTi.czytaj('data5.txt')))
