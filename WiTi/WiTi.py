@@ -46,13 +46,14 @@ class WiTi:
     def licz_kombinacje(data):
         comb = itertools.permutations(data, len(data))
         F_wynik = sys.maxsize
-        for i in list(comb):
+        for i in comb:
             if WiTi.funkcjeCelu(i) < F_wynik:
                 F_wynik = WiTi.funkcjeCelu(i)
         return F_wynik
 
     @staticmethod
     def licz_kombinacje_rekursywnie(data):
+        pom = data.copy()
         F_wynik = sys.maxsize
         if len(pom) == len(data):
             F_wynik2 = WiTi.funkcjeCelu(pom)
@@ -64,6 +65,7 @@ class WiTi:
         return F_wynik
 
 
-#print(WiTi.funkcjeCelu(WiTi.sortujD(WiTi.czytaj('data11.txt'))))
-#print(WiTi.licz_kombinacje(WiTi.czytaj('data5.txt')))
-print(WiTi.licz_kombinacje_rekursywnie(WiTi.czytaj('data5.txt')))
+print(WiTi.funkcjeCelu(WiTi.sortujD(WiTi.czytaj('data10.txt'))))
+print(WiTi.licz_kombinacje(WiTi.czytaj('data10.txt')))
+
+
