@@ -1,3 +1,6 @@
+from timeit import default_timer as timer
+
+
 def czytaj(filepath):
     data = []
     with open(filepath) as f:
@@ -18,7 +21,7 @@ def binaryToDecimal(num):
 def PD_itreacyjny(n, d):
     F = []
     max_val_tab = []
-
+    start = timer()
     F.append(max(d[0][0] - d[0][2], 0) * d[0][1])  # pierwszy krok
     for i in range(2, 2 ** n):
         bin = decimalToBinary(i)
@@ -41,12 +44,17 @@ def PD_itreacyjny(n, d):
         F.append(min_val)
         max_val_tab = []
 
-    print(F.pop())
+    end = timer()
+    return end-start  #print(F.pop())
 
 
 def main():
-    n, d = czytaj('data18.txt')
-    PD_itreacyjny(n, d)
+    n, d = czytaj('data20.txt')
+    #czas = 0
+    #for i in range(20):
+        #czas = czas + PD_itreacyjny(n, d)
+    #print(czas/20)
+    print(PD_itreacyjny(n, d))
 
 if __name__ == '__main__':
     main()
