@@ -70,7 +70,7 @@ def licz_F(data):
 
 def main():
     #print(funkcjeCelu(sortujD(czytaj('data10.txt'))))
-    print(licz_kombinacje_iteracyjnie(czytaj('data10.txt')))
+    #print(licz_kombinacje_iteracyjnie(czytaj('data10.txt')))
     print(licz_F(licz_kombinacje_rekurencyjnie(czytaj('data10.txt'))))
 
 
