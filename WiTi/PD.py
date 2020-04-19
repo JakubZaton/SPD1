@@ -77,6 +77,7 @@ def main():
         for i in range(0, 2 ** n - 1):
             F.append(-1)
         I = 2 ** n - 1
+
         PD_rekurencyjny(I, d, F)
         rekurencyjne.append(F.pop())
     print(iteracyjne)
