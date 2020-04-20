@@ -69,11 +69,11 @@ def PD_itreacyjny(n, d):
 def main():
     iteracyjne = []
     rekurencyjne = []
-    pliki = ['data20.txt']
+    pliki = ['data10.txt']
     # pliki = ['data10.txt', 'data11.txt', 'data12.txt', 'data13.txt', 'data14.txt', 'data15.txt', 'data16.txt', 'data17.txt', 'data18.txt', 'data19.txt', 'data20.txt']
 
     wynik=0
-    for j in range(3):
+    for j in range(20):
         for f in pliki:
             n, d = czytaj(f)
             iteracyjne.append(PD_itreacyjny(n, d))
@@ -88,7 +88,7 @@ def main():
             rekurencyjne.append(F.pop())
         #print(iteracyjne)
         #print(rekurencyjne)
-    print(wynik/3)
+    print(wynik/20)
 
 if __name__ == '__main__':
     main()

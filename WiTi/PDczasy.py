@@ -49,12 +49,12 @@ def PD_itreacyjny(n, d):
 
 
 def main():
-    n, d = czytaj('data20.txt')
-    #czas = 0
-    #for i in range(20):
-        #czas = czas + PD_itreacyjny(n, d)
-    #print(czas/20)
-    print(PD_itreacyjny(n, d))
+    n, d = czytaj('data10.txt')
+    czas = 0
+    for i in range(20):
+        czas = czas + PD_itreacyjny(n, d)
+    print(czas/20)
+    #print(PD_itreacyjny(n, d))
 
 if __name__ == '__main__':
     main()
