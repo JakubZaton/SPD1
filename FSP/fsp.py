@@ -1,20 +1,20 @@
 import itertools
 import sys
-from timeit import default_timer as timer
 
 
 def czytaj(sciezka):
-    el_tab = []
+    data = []
     parametry = []
     with open(sciezka) as f:
         n, m = [int(x) for x in next(f).split()]
-        data = [[int(x) for x in line.split()] for line in f]
-    for i in range(0, len(data)):
-        el = data[i][1::2]
-        el_tab.append(el)
+        data_pom = [[int(x) for x in line.split()] for line in f]
+    for i in range(0, len(data_pom)):
+        el = data_pom[i][1::2]
+        data.append(el)
     parametry.append(n)
     parametry.append(m)
-    return parametry, el_tab
+    return parametry, data
+
 
 
 def calculate(data, parametry):
@@ -46,21 +46,35 @@ def calculate(data, parametry):
 
 def licz_kombinacje_iteracyjnie(data, parametry):
     comb = itertools.permutations(data, len(data))
-    F_wynik = sys.maxsize
+    C_wynik = sys.maxsize
     for i in comb:
-        if calculate(i, parametry) < F_wynik:
-            F_wynik = calculate(i, parametry)
-    return F_wynik
+        wynik = calculate(i, parametry)
+        if wynik < C_wynik:
+            C_wynik = wynik
+    return C_wynik
 
+
+def johnson(data, parametry):
+    l = 0
+    k = parametry[0] - 1
+    pi = [0] * parametry[0]
+    while len(data) != 0:
+        min_val = min(data, key=min)
+        if min_val[0] < min_val[1]:
+            pi[l] = min_val
+            l = l+1
+        else:
+            pi[k] = min_val
+            k = k - 1
+        data.remove(min_val)
+    return pi
 
 
 def main():
-    parametry, data = czytaj('data005.txt')
-    start = timer()
-    licz_kombinacje_iteracyjnie(data, parametry)
-    end = timer()
-    wynik = end - start
-    print(wynik)
+    parametry, data = czytaj('data001.txt')
+    pi = johnson(data, parametry)
+    print(calculate(pi, parametry))
+    #licz_kombinacje_iteracyjnie(data, parametry)
 
 
 if __name__ == '__main__':
