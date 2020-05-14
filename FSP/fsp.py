@@ -71,10 +71,10 @@ def johnson(data, parametry):
 
 
 def main():
-    parametry, data = czytaj('data001.txt')
-    pi = johnson(data, parametry)
-    print(calculate(pi, parametry))
-    #licz_kombinacje_iteracyjnie(data, parametry)
+    parametry, data = czytaj('data006.txt')
+    #pi = johnson(data, parametry)
+    #print(calculate(pi, parametry))
+    print(licz_kombinacje_iteracyjnie(data, parametry))
 
 
 if __name__ == '__main__':

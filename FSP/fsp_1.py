@@ -177,7 +177,7 @@ def prodecure_BnB():
         UB = BnB(j, pi, N)
         global count
         count = count + 1
-    print("Rekurencyjna liczba wywołań: {}".format(count))
+    #print("Rekurencyjna liczba wywołań: {}".format(count))
     return UB
 
 
@@ -210,7 +210,8 @@ def main():
     #print(calculate(data))
     #print(C)
     start = timer()
-    print(prodecure_BnB())
+    #print(prodecure_BnB())
+    prodecure_BnB()
     end = timer()
     print(end - start)
     #print(calculate(data))
