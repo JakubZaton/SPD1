@@ -59,6 +59,8 @@ def saa(T0, Te, L):
     Tend=Te
     alpha=0.97
     cmax = Cmax(pi)
+    pi_star = pi
+    cmax_star = Cmax(pi_star)
     while T > Tend:
         for k in range(1, int(L)):
             pi_new = deepcopy(pi)
@@ -71,7 +73,13 @@ def saa(T0, Te, L):
                 if r >= math.e ** ((cmax[0] - new_cmax[0]) / T):
                     pi_new = pi
                     new_cmax = cmax
+            pi = pi_new
+            cmax = new_cmax
+            if cmax[0] < cmax_star[0]:
+                pi_star = deepcopy(pi)
+                cmax_star = deepcopy(cmax)
     T = T*alpha
+    print(cmax_star)
 
 
 def main():
